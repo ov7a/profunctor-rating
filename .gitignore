@@ -1,3 +1,4 @@
 .vscode
 elm-stuff
 repl-temp-*
+build/

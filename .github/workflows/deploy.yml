@@ -1,0 +1,42 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Elm environment
+        uses: JorelAli/setup-elm@v1
+        with:
+          elm-version: 0.19.1
+
+      - name: test 
+        run: |
+          mkdir ~/.npm-global
+          npm config set prefix '~/.npm-global'
+          PATH=~/.npm-global/bin:$PATH
+          npm install -g elm-test
+          elm-test
+
+      - name: build
+        run: |   
+          elm make src/Main.elm --output build/index.html
+
+      - name: 
+        id: push_directory
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source-directory: build/
+          destination-github-username: 'ov7a'
+          destination-repository-name: 'ov7a.github.io'
+          user-email: ov7a@yandex.ru
+          commit-message: autocommit from ORIGIN_COMMIT
+          target-branch: master
+          target-directory: profunctor-rating
