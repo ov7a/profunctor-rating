@@ -54,6 +54,7 @@ style =
     , spacing = 10
     , padding = 10
     , maxWidth = 900
+    , maxInputWidth = 700
     , loaderColor = "#EAEAEA" --same as font color, but no easy way to convert this
     }
 
@@ -82,7 +83,11 @@ body model =
 
 mainBody : Model -> List (Element Message)
 mainBody model =
-    [ Element.row [ Element.centerX, Element.spacing style.spacing, Element.width fill ] [ Element.Lazy.lazy expressionInput model.expression, expressionButton ]
+    [ Element.row
+        [ Element.centerX, Element.spacing style.spacing, Element.padding style.padding, Element.width <| maximum style.maxInputWidth <| fill ]
+        [ Element.Lazy.lazy expressionInput model.expression
+        , expressionButton
+        ]
     , Element.row [ Element.centerX ] [ maybe errorDisplay model.expressionError ]
     , Element.row [ Element.centerX ] [ maybe mainTable model.rating ]
     ]
@@ -262,7 +267,8 @@ githubLink =
         [ Html.Attributes.id "forkongithub" ]
         [ Html.node "style"
             [ Html.Attributes.type_ "text/css" ]
-            [ Html.text "#forkongithub a{background:#000;color:#fff;text-decoration:none;font-family:arial,sans-serif;text-align:center;font-weight:bold;padding:5px 40px;font-size:1rem;line-height:2rem;position:relative;transition:0.5s;}#forkongithub a:hover{background:#047700;color:#fff;}#forkongithub a::before,#forkongithub a::after{content:\"\";width:100%;display:block;position:absolute;top:1px;left:0;height:1px;background:#fff;}#forkongithub a::after{bottom:1px;top:auto;}@media screen and (min-width:800px){#forkongithub{position:absolute;display:block;top:0;right:0;width:200px;overflow:hidden;height:200px;z-index:9999;}#forkongithub a{width:200px;position:absolute;top:60px;right:-60px;transform:rotate(45deg);-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);-moz-transform:rotate(45deg);-o-transform:rotate(45deg);box-shadow:4px 4px 10px rgba(0,0,0,0.8);}}" ]
+            -- source: https://codepo8.github.io/css-fork-on-github-ribbon/
+            [ Html.text "#forkongithub a{background:#000;color:#fff;text-decoration:none;font-family:arial,sans-serif;text-align:center;font-weight:bold;padding:3.75px 30px;font-size:0.75rem;line-height:1.5rem;position:relative;transition:0.5s;}#forkongithub a:hover{background:#047700;color:#fff;}#forkongithub a::before,#forkongithub a::after{content:\"\";width:100%;display:block;position:absolute;top:1px;left:0;height:1px;background:#fff;}#forkongithub a::after{bottom:1px;top:auto;}@media screen and (min-width:800px){#forkongithub{position:absolute;display:block;top:0;right:0;width:150px;overflow:hidden;height:150px;z-index:9999;}#forkongithub a{width:150px;position:absolute;top:45px;right:-45px;transform:rotate(45deg);-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);-moz-transform:rotate(45deg);-o-transform:rotate(45deg);box-shadow:3px 3px 7.5px rgba(0,0,0,0.8);}}" ]
         , Html.a
             [ Html.Attributes.href "https://github.com/ov7a/profunctor-rating" ]
             [ Html.text "Source code on GitHub" ]
