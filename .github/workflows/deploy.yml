@@ -25,7 +25,7 @@ jobs:
 
       - name: build
         run: |   
-          elm make src/Main.elm --output build/index.html
+          elm make src/Main.elm --output build/index.html --optimize
 
       - name: 
         id: push_directory

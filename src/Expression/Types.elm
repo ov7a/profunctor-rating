@@ -84,7 +84,7 @@ function name arity func =
     let
         errorMsg : List Float -> String
         errorMsg args =
-            "Function " ++ name ++ " has't returned a result for " ++ Debug.toString args
+            "Function " ++ name ++ " hasn't returned a result for [" ++ (args |> List.map String.fromFloat |> String.join ", ") ++ "]"
 
         evaluate : List Float -> Result String Float
         evaluate args =
