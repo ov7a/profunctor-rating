@@ -180,7 +180,9 @@ formWrapper : Element Message -> Element Message
 formWrapper elem =
     Html.form
         [ Html.Events.onSubmit Calculate ]
-        [ elem |> Element.layoutWith { options = [ Element.noStaticStyleSheet ] } defaultStyle ]
+        [ elem |> Element.layoutWith { options = [ Element.noStaticStyleSheet ] } defaultStyle
+        , Html.input [ Html.Attributes.type_ "submit", Html.Attributes.hidden True ] []
+        ]
         |> Element.html
         |> Element.el [ Element.width fill ]
 
